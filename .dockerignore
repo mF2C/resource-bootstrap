@@ -1,0 +1,7 @@
+.idea/
+*.iml
+Dockerfile
+*.md
+*ignore
+*~
+build-publish.sh

@@ -1,0 +1,14 @@
+{
+  "name": "emmy-server-service",
+  "description": "The emmy server.",
+  "exec": "data:application/x-yaml;base64,dmVyc2lvbjogJzMnCgpzZXJ2aWNlczoKICBlbW15LXNlcnZlcjoKICAgIGltYWdlOiBtZjJjL2VtbXktc2VydmVyOmdpdC0wMjU5YTc4CiAgICBlbnZpcm9ubWVudDoKICAgICAgLSBFTU1ZX1JFRElTX0FERFI9cmVkaXM6NjM3OQogICAgcG9ydHM6CiAgICAgIC0gIjcwMDc6NzAwNyIKICAgIGRlcGVuZHNfb246CiAgICAgIC0gcmVkaXMKCiAgcmVkaXM6CiAgICBpbWFnZTogcmVkaXM6bGF0ZXN0CiAgICBwb3J0czoKICAgICAgLSAiNjM3OTo2Mzc5Igo=",
+  "exec_type": "docker-compose",
+  "sla_templates": [],
+  "agent_type": "normal",
+  "num_agents": 1,
+  "cpu_arch": "x86-64",
+  "os": "linux",
+  "storage_min": 0,
+  "req_resource": [],
+  "opt_resource": []
+}
