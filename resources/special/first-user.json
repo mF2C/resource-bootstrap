@@ -1,0 +1,9 @@
+{
+  "userTemplate": {
+    "href": "user-template/self-registration",
+    "password": "${MF2C_PASS}",
+    "passwordRepeat": "${MF2C_PASS}",
+    "emailAddress": "mf2c@example.com",
+    "username": "${MF2C_USER}"
+  }
+}

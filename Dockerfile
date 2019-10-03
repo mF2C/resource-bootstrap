@@ -5,7 +5,7 @@ ENV CIMI_HOST=cimi \
 
 WORKDIR /app/
 CMD /app/bootstrap.sh
-RUN apk add curl
+RUN apk add curl jq gettext
 
 COPY bootstrap.sh /app/
 COPY resources/ /app/resources/
