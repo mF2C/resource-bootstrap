@@ -7,7 +7,8 @@ It is deployed alongside mF2C as a container, executing the bootstrap script on 
 
 ## Usage and testing
 
-Add JSON resources to `resources/{services,}` as they would be send to CIMI manually.
+Add JSON resources to `resources/{services,session-templates}/` as they would be send to CIMI manually.
+Special resources, processed manually, are in `resources/special/`
 
 To test, run the container locally and point it to a running instance of mF2C from the outside:
 
