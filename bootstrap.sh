@@ -22,7 +22,15 @@ for filename in resources/services/*; do
     [ -e "$filename" ] || continue
     echo "    submitting $filename"
     abs_filename="$(realpath "$filename")"
-    file_contents="$(cat "$abs_filename")"
-    cimi_super_post -d "$file_contents" "$CIMI_URL/api/service"
+    cimi_super_post -d "@$abs_filename" "$CIMI_URL/api/service"
 done
+
+echo "Bootstrapping session templates..."
+for filename in resources/session-templates/*; do
+    [ -e "$filename" ] || continue
+    echo "    submitting $filename"
+    abs_filename="$(realpath "$filename")"
+    cimi_super_post -d "@$abs_filename" "$CIMI_URL/api/session-template"
+done
+
 echo "    done!"
