@@ -8,6 +8,8 @@ cimi_super="curl -ksSL -H 'content-type: application/json' -H 'slipstream-authn-
 alias cimi_super_get="$cimi_super -XGET"
 # shellcheck disable=SC2139
 alias cimi_super_post="$cimi_super --fail -o /dev/null -XPOST"
+# shellcheck disable=SC2139
+alias cimi_super_put="$cimi_super --fail -o /dev/null -XPUT"
 CIMI_URL="http://$CIMI_HOST:$CIMI_PORT"
 
 echo "Waiting for CIMI to be ready at $CIMI_URL/api/cloud-entry-point..."
@@ -25,9 +27,12 @@ echo "Performing special bootstrap steps..."
 user_count="$(cimi_super_get "$CIMI_URL/api/user" | jq '.count')"
 if [ "$user_count" -eq 0 ]; then
     echo "No existing mF2C users found, registering initial user."
-    echo "The MF2C_USER and MF2C_PASS environemnt variables must be set!"
+    echo "    the MF2C_USER and MF2C_PASS environemnt variables must be set!"
     # also conveniently fails if this isn't set
-    echo "They are MF2C_USER=$MF2C_USER and MF2C_PASS=$MF2C_PASS"
+    echo "    they are MF2C_USER=$MF2C_USER and MF2C_PASS=$MF2C_PASS"
+    printf "%${#MF2C_USER}s                   don't look at this %.${#MF2C_PASS}s\n" \
+        " " \
+        "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
 
     envsubst <resources/special/first-user.json >resources/special/first-user-envsubst.json
 
@@ -35,8 +40,13 @@ if [ "$user_count" -eq 0 ]; then
     echo "    submitting $filename"
     abs_filename="$(realpath "$filename")"
     cimi_super_post -d "@$abs_filename" "$CIMI_URL/api/user"
+
+    echo "    forcing user '$MF2C_USER' into an active state"
+    cimi_super_put -d "{\"id\": \"user/$MF2C_USER\", \"state\": \"ACTIVE\"}" "$CIMI_URL/api/user/$MF2C_USER"
+
+    echo "    done!"
 else
-    echo "At least one user exists in the system ($user_count)."
+    echo "At least one user exists in the system ($user_count), doing nothing."
 fi
 
 
@@ -56,4 +66,4 @@ for filename in resources/session-templates/*; do
     cimi_super_post -d "@$abs_filename" "$CIMI_URL/api/session-template"
 done
 
-echo "    done!"
+echo "Done!"
