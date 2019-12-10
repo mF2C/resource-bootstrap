@@ -1,0 +1,18 @@
+{
+  "name": "default",
+  "state": "started",
+  "details": {
+    "type": "template",
+    "name": "default",
+    "provider": {
+      "id": "mf2c",
+      "name": "mF2C Platform"
+    },
+    "client": {
+      "id": "id",
+      "name": "client-name"
+    },
+    "creation": "2019-05-12T12:36:45.01Z",
+    "guarantees": []
+  }
+}

@@ -52,24 +52,37 @@ fi
 # shellcheck disable=SC2154
 if [ -z ${isCloud+nonblank} ]; then
     echo "The isCloud environment variable is not set!"
-    echo "Set it to \"true\" to enable service and session template bootstrap. Failing."
+    echo "Set it to \"true\" to enable SLA template, service and session template bootstrap. Failing."
     exit 1
 fi
 
 # shellcheck disable=SC2154
 if ! { [ "$isCloud" = "true" ] || [ "$isCloud" = "True" ]; }; then
     echo "Not in the cloud (isCloud is not exactly \"true\")."
-    echo "    Not bootstrapping services, session templates."
+    echo "    Not bootstrapping SLA templates, services, session templates."
     exit 0
 fi
 
+echo "Bootstrapping SLA templates..."
+for filename in resources/sla-templates/*; do
+    [ -e "$filename" ] || continue
+    echo "    submitting $filename"
+    abs_filename="$(realpath "$filename")"
+    cimi_super_post -d "@$abs_filename" "$CIMI_URL/api/agreement"
+done
+
+# we need an ID reference to the SLA template ID to reference in the services
+default_agreement_id="$(cimi_super_get "$CIMI_URL/api/agreement" | jq -r '.agreements[] | select(.name = "default") | .id')"
+export default_agreement_id
 
 echo "Bootstrapping services..."
 for filename in resources/services/*; do
     [ -e "$filename" ] || continue
     echo "    submitting $filename"
     abs_filename="$(realpath "$filename")"
-    cimi_super_post -d "@$abs_filename" "$CIMI_URL/api/service"
+    abs_filename_substed="$abs_filename.subst"
+    envsubst < "$abs_filename" > "$abs_filename_substed"
+    cimi_super_post -d "@$abs_filename_substed" "$CIMI_URL/api/service"
 done
 
 echo "Bootstrapping session templates..."
