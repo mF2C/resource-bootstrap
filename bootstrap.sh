@@ -49,6 +49,20 @@ else
     echo "At least one user exists in the system ($user_count), doing nothing."
 fi
 
+# shellcheck disable=SC2154
+if [ -z ${isCloud+nonblank} ]; then
+    echo "The isCloud environment variable is not set!"
+    echo "Set it to \"true\" to enable service and session template bootstrap. Failing."
+    exit 1
+fi
+
+# shellcheck disable=SC2154
+if ! { [ "$isCloud" = "true" ] || [ "$isCloud" = "True" ]; }; then
+    echo "Not in the cloud (isCloud is not exactly \"true\")."
+    echo "    Not bootstrapping services, session templates."
+    exit 0
+fi
+
 
 echo "Bootstrapping services..."
 for filename in resources/services/*; do
