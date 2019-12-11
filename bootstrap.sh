@@ -68,12 +68,12 @@ for filename in resources/sla-templates/*; do
     [ -e "$filename" ] || continue
     echo "    submitting $filename"
     abs_filename="$(realpath "$filename")"
-    cimi_super_post -d "@$abs_filename" "$CIMI_URL/api/agreement"
+    cimi_super_post -d "@$abs_filename" "$CIMI_URL/api/sla-template"
 done
 
 # we need an ID reference to the SLA template ID to reference in the services
-default_agreement_id="$(cimi_super_get "$CIMI_URL/api/agreement" | jq -r '.agreements[] | select(.name = "default") | .id')"
-export default_agreement_id
+default_slatemplate_id="$(cimi_super_get "$CIMI_URL/api/sla-template" | jq -r '.templates[] | select(.name = "default") | .id')"
+export default_slatemplate_id
 
 echo "Bootstrapping services..."
 for filename in resources/services/*; do

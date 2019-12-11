@@ -3,7 +3,7 @@
   "description": "The micro video analysis service.",
   "exec": "data:application/x-yaml;base64,dmVyc2lvbjogJzMuNCcKCnNlcnZpY2VzOgogIHZpZGVvLWFuYWx5c2lzOgogICAgaW1hZ2U6IHNpeHNxL2ZhY2VzOjAuMi1hcm0zMnY3CiAgICBwb3J0czoKICAgICAgLSA4MDo1MDAwCiAgICByZXN0YXJ0OiBvbi1mYWlsdXJlCiAgICBkZXZpY2VzOgogICAgICAtIC9kZXYvdmlkZW8wCg==",
   "exec_type": "docker-compose",
-  "sla_templates": ["$default_agreement_id"],
+  "sla_templates": ["$default_slatemplate_id"],
   "agent_type": "micro",
   "num_agents": 1,
   "cpu_arch": "arm",
