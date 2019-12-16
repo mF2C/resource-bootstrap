@@ -1,7 +1,7 @@
 .idea/
 *.iml
 Dockerfile
-*.md
+**/*.md
 *ignore
-*~
+**/*~
 build-publish.sh
